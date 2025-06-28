@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ルーレット</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: sans-serif;
+      margin-top: 100px;
+    }
+    #result {
+      font-size: 48px;
+      margin: 30px;
+    }
+    button {
+      font-size: 24px;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>ルーレット</h1>
+  <div id="result">？</div>
+  <button onclick="spin()">回す！</button>
+
+  <script>
+    const choices = ["大吉", "中吉", "小吉", "凶", "大凶"];
+    function spin() {
+      const result = choices[Math.floor(Math.random() * choices.length)];
+      document.getElementById("result").textContent = result;
+    }
+  </script>
+</body>
+</html>
