@@ -2,33 +2,62 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>ルーレット</title>
+  <title>くるくるルーレット簡易版</title>
   <style>
     body {
-      text-align: center;
       font-family: sans-serif;
-      margin-top: 100px;
+      text-align: center;
+      margin-top: 50px;
     }
-    #result {
-      font-size: 48px;
-      margin: 30px;
+    textarea {
+      width: 300px;
+      height: 150px;
+      font-size: 16px;
     }
     button {
-      font-size: 24px;
+      font-size: 18px;
+      margin-top: 10px;
       padding: 10px 20px;
+    }
+    #display {
+      font-size: 40px;
+      margin: 30px 0;
+      height: 50px;
     }
   </style>
 </head>
 <body>
-  <h1>ルーレット</h1>
-  <div id="result">？</div>
+  <h1>ルーレット（くるくる演出つき）</h1>
+  <p>1行ずつ名前を入力：</p>
+  <textarea id="names" placeholder="田中\n佐藤\n鈴木"></textarea><br>
   <button onclick="spin()">回す！</button>
 
+  <div id="display">？</div>
+  <div id="result"></div>
+
   <script>
-    const choices = ["大吉", "中吉", "小吉", "凶", "大凶"];
     function spin() {
-      const result = choices[Math.floor(Math.random() * choices.length)];
-      document.getElementById("result").textContent = result;
+      const rawText = document.getElementById("names").value;
+      const names = rawText.split("\n").map(n => n.trim()).filter(n => n);
+      const display = document.getElementById("display");
+      const result = document.getElementById("result");
+
+      if (names.length === 0) {
+        alert("名前を入力してください");
+        return;
+      }
+
+      let count = 0;
+      let maxCount = 30 + Math.floor(Math.random() * 20); // 回る回数
+      const interval = setInterval(() => {
+        const name = names[Math.floor(Math.random() * names.length)];
+        display.textContent = name;
+        count++;
+        if (count >= maxCount) {
+          clearInterval(interval);
+          result.textContent = `🎉 当たったのは「${display.textContent}」！`;
+        }
+      }, 100);
     }
   </script>
 </body>
